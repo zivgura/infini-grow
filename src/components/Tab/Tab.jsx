@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import {LabelContainer, TabContainer, UnderlineHighlightContainer} from "./Tabs.style";
 
 export default function Tab({activeTab, label, onClick}){
-
+    const isActiveTab = activeTab === label;
     return (
         <TabContainer onClick={onClick}>
-            <LabelContainer activeTab={activeTab}>
+            <LabelContainer isActiveTab={isActiveTab}>
                 {label}
             </LabelContainer>
-            {activeTab === label && <UnderlineHighlightContainer/>}
+            {isActiveTab && <UnderlineHighlightContainer/>}
         </TabContainer>
     )
 }

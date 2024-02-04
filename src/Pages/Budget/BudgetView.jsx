@@ -7,7 +7,6 @@ import {
 } from "./Budget.style";
 import {BudgetHeader, BudgetSubTitle, BudgetTitle, TabsLabels} from "./constants";
 import Tabs from "../../components/Tabs/Tabs";
-import Button from "../../components/Button/Button";
 
 export default function BudgetView() {
     return (
@@ -21,7 +20,7 @@ export default function BudgetView() {
                 </TitleContainer>
                 <SubTitleContainer>
                     {BudgetSubTitle}
-                    <Button />
+                    {/*<Button />*/}
                 </SubTitleContainer>
             </SubHeaderContainer>
             <Tabs tabsLabels={TabsLabels}/>
