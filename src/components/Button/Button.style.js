@@ -6,9 +6,9 @@ export const ButtonContainer = styled.div`
     gap: 8px;
     cursor: pointer;
     padding: 12px;
-    border: 1px solid #B2BBD580;
+    border: ${({theme})=> `1px solid ${theme.borders.main}`};
     border-radius: 4px;
-    color: #707EA7;
+    color: ${({theme})=> theme.colors.grayBlue};
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;

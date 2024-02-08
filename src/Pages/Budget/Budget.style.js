@@ -29,7 +29,7 @@ export const TitleContainer = styled.section`
 export const SubTitleContainer = styled.section`
     display: flex;
     justify-content: space-between;
-    color: #99A4C2;
+    color: ${({theme})=> theme.colors.lightGray};
     font-size: 14px;
     font-weight: 400;
     line-height: 21px;

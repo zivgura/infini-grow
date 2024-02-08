@@ -1,10 +1,14 @@
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './theme';
 import BudgetView from "./Pages/Budget/BudgetView";
+import './App.css';
 
 function App() {
     return (
         <div className="App">
-            <BudgetView/>
+            <ThemeProvider theme={theme}>
+                <BudgetView/>
+            </ThemeProvider>
         </div>
     );
 }
