@@ -4,11 +4,13 @@ import Select from '../Select/Select';
 import ToggleButton from '../ToggleButton/ToggleButton';
 import { AMOUNT_TYPE, FieldTypes, NUMBER_TYPE, SELECT_TYPE, TOGGLE_TYPE } from './constants';
 import { FieldContainer, FieldLabel, FieldValue } from './Field.style';
+import { NumericFormatCustom } from './utils';
 
 export default function Field({formik, name, label, value, type, fieldProps, onBlur}) {
-    function handleChange({target}){
+    function handleChange({target}) {
         formik.setFieldValue(name, target.value)
     }
+
     return (
         <FieldContainer>
             {label &&
@@ -29,6 +31,9 @@ export default function Field({formik, name, label, value, type, fieldProps, onB
                                 error={formik.errors[name]}
                                 helperText={formik.errors[name]}
                                 fullWidth
+                                InputProps={{
+                                    inputComponent: NumericFormatCustom,
+                                }}
                             />
                             : type === SELECT_TYPE ?
                                 <Select
