@@ -8,10 +8,9 @@ export const BudgetViewContainer = styled.section`
 
 export const HeaderContainer = styled.section`
     display: flex;
-    font-family: "Avenir Next",serif;
     font-size: 24px;
     font-weight: 500;
-    line-height: 32.78px;
+    line-height: 32px;
 `;
 
 export const SubHeaderContainer = styled.section`
@@ -22,19 +21,15 @@ export const SubHeaderContainer = styled.section`
 
 export const TitleContainer = styled.section`
     display: flex;
-    
-    font-family: "Avenir Next",serif;
     font-size: 18px;
     font-weight: 600;
-    line-height: 24.59px;
+    line-height: 24px;
 `;
 
 export const SubTitleContainer = styled.section`
     display: flex;
     justify-content: space-between;
-    
     color: #99A4C2;
-    font-family: "Avenir Next",serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 21px;

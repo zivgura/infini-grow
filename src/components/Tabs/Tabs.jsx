@@ -7,14 +7,14 @@ export default function Tabs({tabsLabels}) {
     const [activeTab, setActiveTab] = useState(tabsLabels?.[0])
     return (
         <TabsContainer>
-            {tabsLabels?.map((tabLabel, index) =>
-                (<Tab
+            {tabsLabels?.map((tabLabel, index) => (
+                <Tab
                     key={index}
                     onClick={() => setActiveTab(tabLabel)}
                     label={tabLabel}
                     activeTab={activeTab}
-                />)
-            )}
+                />
+            ))}
         </TabsContainer>
     )
 }

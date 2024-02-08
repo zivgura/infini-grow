@@ -1,7 +1,11 @@
-export default function Button(){
-    return(
-        <div>
+import { ButtonContainer } from './Button.style';
+import {ReactComponent as PlusIcon} from '../../assets/plus-icon.svg'
 
-        </div>
+export default function Button({onClick, text}){
+    return(
+        <ButtonContainer onClick={onClick}>
+            <PlusIcon />
+            {text}
+        </ButtonContainer>
     )
 }

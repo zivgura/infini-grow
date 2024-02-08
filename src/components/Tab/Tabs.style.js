@@ -9,7 +9,6 @@ export const TabContainer = styled.div`
 
 export const LabelContainer = styled.div`
     display: flex;
-    font-family: "Avenir Next",serif;
     font-size: 20px;
     font-weight: 600;
     line-height: 16px;
