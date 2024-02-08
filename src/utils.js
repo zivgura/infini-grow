@@ -4,21 +4,38 @@ export function initStorage(object) {
     window.localStorage.setItem(BUDGETS, JSON.stringify({'0': object}));
 }
 
+export function buildObjectToStorage(object, index){
+    return {
+        id: index,
+        value: object
+    }
+    // keyValue[`${index}`] = object;
+    // return keyValue;
+}
+
 export function save(object, index) {
     const rowsDataFromStorage = JSON.parse(localStorage?.getItem('budgets'));
+    let objectToStorage = buildObjectToStorage(object, index);
     if (index === 0 && !rowsDataFromStorage)
-        initStorage(object);
+        initStorage(objectToStorage);
     else {
         let budgets = getBudgets();
-        budgets = [object, ...budgets];
+        budgets = [objectToStorage, ...budgets];
         window.localStorage.setItem(BUDGETS, JSON.stringify(budgets));
     }
 }
 
-export function edit(object, index) {
-    let budgets = getBudgets();
-    budgets[index] = object;
-    window.localStorage.setItem(BUDGETS, JSON.stringify(budgets));
+export function getBudgetIndexById(id){
+    const budgets = getBudgets();
+    return budgets.findIndex((budget)=> budget.id === id);
+}
+export function edit(object, id) {
+    let budgets = getBudgetsFromStorage();
+    const budgetIndex = getBudgetIndexById(id);
+    if (budgetIndex >= 0) {
+        budgets[budgetIndex] = buildObjectToStorage(object, id);
+        updateStorage(budgets);
+    }
 }
 
 export function updateUI(setState) {
@@ -30,8 +47,18 @@ export function updateStorage(state) {
 }
 
 export function getBudgets() {
-    const budgetsObject = JSON.parse(window.localStorage.getItem(BUDGETS));
+    const budgetsObject = getBudgetsFromStorage();
     return Object.values(budgetsObject);
+}
+
+export function getBudgetsFromStorage(){
+    return JSON.parse(window.localStorage?.getItem('budgets'));
+}
+
+export function remove(id){
+    let budgets = getBudgets();
+    budgets = budgets.filter((budget) => budget.id !== id)
+    updateStorage(budgets);
 }
 
 export function clear(){

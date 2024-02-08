@@ -16,7 +16,7 @@ export const FieldsNames = {
     baseline: 'baseline'
 }
 
-export const DefaultBudget = {
+export const DefaultBudgetValue = {
     name: 'New Channel',
     budgetFrequency: ANNUAL,
     baseline: 0,

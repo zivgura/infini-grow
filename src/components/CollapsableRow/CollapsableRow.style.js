@@ -9,16 +9,26 @@ export const CollapsableRowContainer = styled.div`
 
 export const RowHeaderContainer = styled.div`
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding-left: 14px;
+    padding: 0 14px;
     background-color: #B2BBD550;
     border-radius: ${({ open }) => open ? '3px 0': '3px'};
-    gap: 14px;
     height: 52px;
     cursor: pointer;
     border-bottom: ${({ open }) => open ? '1px solid #B2BBD550': 'none'};
 `;
 
+export const LeftSectionContainer = styled.section`
+    display: flex;
+    align-items: center;
+    gap: 14px;
+`;
+export const RightSectionContainer = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+`;
 export const RowBodyContainer = styled.div`
     display: flex;
     gap: 56px;

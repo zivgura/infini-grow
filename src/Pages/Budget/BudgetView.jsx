@@ -8,24 +8,42 @@ import {
     SubTitleContainer,
     TitleContainer
 } from "./Budget.style";
-import { BUDGET_HEADER, BUDGET_SUB_TITLE, BUDGET_TITLE, BUTTON_TEXT, DefaultBudget, TabsLabels } from "./constants";
+import {
+    BUDGET_HEADER,
+    BUDGET_SUB_TITLE,
+    BUDGET_TITLE,
+    BUTTON_TEXT,
+    DefaultBudgetValue,
+    TabsLabels
+} from "./constants";
 import Tabs from "../../components/Tabs/Tabs";
-import { clear, save, updateUI } from '../../utils';
+import { buildObjectToStorage, getBudgetsFromStorage, remove, save, updateUI } from '../../utils';
 
 export default function BudgetView() {
     const [rowsData, setRowsData] = useState([])
+    const [openRowId, setOpenRowId] = useState(null)
 
     useEffect(() => {
-        const rowsDataFromStorage = JSON.parse(window.localStorage?.getItem('budgets'));
+        const rowsDataFromStorage = getBudgetsFromStorage();
         if (rowsDataFromStorage)
             updateUI(setRowsData);
-        return clear;
+
+        return () => {
+        };
     }, []);
 
     function addRow() {
-        const nextIndex = rowsData.length;
-        setRowsData([DefaultBudget, ...rowsData])
-        save(DefaultBudget, nextIndex)
+        const nextId = rowsData.length;
+        const objectToStorage = buildObjectToStorage(DefaultBudgetValue, nextId);
+        setRowsData([...rowsData, objectToStorage])
+        save(DefaultBudgetValue, nextId)
+        setOpenRowId(nextId)
+    }
+
+    function deleteRow(id){
+        const filteredRowsData = rowsData.filter((budget) => budget.id !== id)
+        setRowsData(filteredRowsData);
+        remove(id);
     }
 
     return (
@@ -45,7 +63,9 @@ export default function BudgetView() {
             <Tabs tabsLabels={TabsLabels}/>
             <CollapsableRows
                 rowsData={rowsData}
-                setRowsData={setRowsData}
+                openRowId={openRowId}
+                setOpenRowId={setOpenRowId}
+                deleteRow={deleteRow}
             />
         </BudgetViewContainer>
     )

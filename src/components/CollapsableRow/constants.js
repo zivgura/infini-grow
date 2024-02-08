@@ -22,3 +22,13 @@ export const BudgetFrequencyOptions = [
 ];
 
 export const BudgetAllocationOptions = [EQUAL, MANUAL]
+export const MenuPositioningObject = {
+    anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+    },
+    transformOrigin: {
+        vertical: 'top',
+        horizontal: 'right',
+    }
+}

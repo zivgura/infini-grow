@@ -1,26 +1,16 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { updateStorage } from '../../utils';
 import CollapsableRow from '../CollapsableRow/CollapsableRow';
 import { FieldTypes } from '../Field/constants';
 
-export default function CollapsableRows({rowsData, setRowsData}) {
-    const [openRowIndex, setOpenRowIndex] = useState(0)
-
-    function setRowData(rowData, index) {
-        rowsData[index] = rowData
-        setRowsData(rowsData)
-        updateStorage(rowsData)
-    }
-
+export default function CollapsableRows({rowsData, openRowId, setOpenRowId, deleteRow}) {
     return (
-        rowsData?.map((rowData, index) => (
+        rowsData?.map(({id, value}) => (
             <CollapsableRow
-                index={index}
-                openRowIndex={openRowIndex}
-                setOpenRowIndex={setOpenRowIndex}
-                rowData={rowData}
-                setRowData={setRowData}
+                id={id}
+                openRowId={openRowId}
+                setOpenRowId={setOpenRowId}
+                rowData={value}
+                deleteRow={deleteRow}
             />
         ))
     )

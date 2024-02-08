@@ -1,72 +1,32 @@
-import { TextField } from '@mui/material';
 import PropTypes from 'prop-types';
-import Select from '../Select/Select';
-import ToggleButton from '../ToggleButton/ToggleButton';
-import { AMOUNT_TYPE, FieldTypes, NUMBER_TYPE, SELECT_TYPE, TOGGLE_TYPE } from './constants';
+import {
+    FieldTypes
+} from './constants';
 import { FieldContainer, FieldLabel, FieldValue } from './Field.style';
-import { NumericFormatCustom } from './utils';
+import { getFieldLabelByType, getFieldValueByType } from './utils';
 
-export default function Field({formik, name, label, value, type, fieldProps, onBlur}) {
+export default function Field(props) {
+    const {formik, name} = props;
     function handleChange({target}) {
         formik.setFieldValue(name, target.value)
     }
+
+    const innerProps = {...props, handleChange: handleChange}
+    const label = getFieldLabelByType(innerProps)
+    const value = getFieldValueByType(innerProps)
 
     return (
         <FieldContainer>
             {label &&
                 <FieldLabel>
                     {label}
-                </FieldLabel>}
-            {type &&
+                </FieldLabel>
+            }
+            {value &&
                 <FieldValue>
-                    {
-                        type === NUMBER_TYPE ?
-                            <TextField
-                                name={name}
-                                variant='outlined'
-                                value={value}
-                                onBlur={onBlur}
-                                onChange={handleChange}
-                                size='small'
-                                error={formik.errors[name]}
-                                helperText={formik.errors[name]}
-                                fullWidth
-                                InputProps={{
-                                    inputComponent: NumericFormatCustom,
-                                }}
-                            />
-                            : type === SELECT_TYPE ?
-                                <Select
-                                    name={name}
-                                    value={value}
-                                    options={fieldProps}
-                                    onBlur={onBlur}
-                                    onChange={handleChange}
-                                />
-                                : type === AMOUNT_TYPE ?
-                                    <TextField
-                                        name={name}
-                                        variant='outlined'
-                                        value={value}
-                                        onBlur={onBlur}
-                                        onChange={handleChange}
-                                        size='small'
-                                        InputProps={{startAdornment: '$'}}
-                                        fullWidth
-                                    />
-                                    : type === TOGGLE_TYPE ?
-                                        <ToggleButton
-                                            name={name}
-                                            value={value}
-                                            options={fieldProps}
-                                            onChange={(e) => {
-                                                handleChange(e)
-                                                onBlur()
-                                            }}
-                                        />
-                                        : null
-                    }
-                </FieldValue>}
+                    {value}
+                </FieldValue>
+            }
         </FieldContainer>
     )
 }

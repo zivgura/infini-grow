@@ -1,22 +1,42 @@
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useEffect, useRef, useState } from 'react';
 import { FieldsNames as formFields, FieldsNames } from '../../Pages/Budget/constants';
 import { edit } from '../../utils';
-import { NUMBER_TYPE, SELECT_TYPE, TOGGLE_TYPE } from '../Field/constants';
+import { EDITABLE_LABEL_TYPE, NUMBER_TYPE, SELECT_TYPE, TOGGLE_TYPE } from '../Field/constants';
 import Field from '../Field/Field';
+import onNameFieldBlur from '../Field/utils';
+import Menu from '../Menu/Menu';
+import { getMenuOptions } from '../Menu/utils';
 import {
-    ArrowDownIconContainer, CollapsableRowContainer, RowBodyContainer, RowHeaderContainer, RowTitleContainer
+    ArrowDownIconContainer,
+    CollapsableRowContainer,
+    LeftSectionContainer, RightSectionContainer,
+    RowBodyContainer,
+    RowHeaderContainer,
+    RowTitleContainer
 } from "./CollapsableRow.style";
 import Collapse from "@mui/material/Collapse";
 import { ReactComponent as BudgetIcon } from "../../assets/budget-icon.svg";
 import { ReactComponent as ArrowDownIcon } from "../../assets/arrow-down-icon.svg";
+import { ReactComponent as KebabMenuIcon } from "../../assets/kebab-icon.svg";
 import {
-    BUDGET_FREQUENCY, BUDGET_ALLOCATION, BudgetFrequencyOptions, BudgetAllocationOptions
+    BUDGET_FREQUENCY, BUDGET_ALLOCATION, BudgetFrequencyOptions, BudgetAllocationOptions, MenuPositioningObject
 } from './constants';
 import { getBaselineTitle } from './utils';
 
-export default function CollapsableRow({index, openRowIndex, setOpenRowIndex, rowData, setRowData}) {
-    const isRowOpen = openRowIndex === index;
+export default function CollapsableRow({id, openRowId, setOpenRowId, rowData, deleteRow}) {
+    const isRowOpen = openRowId === id;
     const {name, budgetFrequency, baseline, budgetAllocation} = rowData;
+    const menuRef = useRef(null)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openMenu, setOpenMenu] = useState(false);
+    const [isInEditMode, setIsInEditMode] = useState(false);
+
+    useEffect(() => {
+        if (menuRef) {
+            setAnchorEl(menuRef.current)
+        }
+    }, [menuRef]);
 
     const initialValues = {
         [formFields.name]: name,
@@ -35,46 +55,57 @@ export default function CollapsableRow({index, openRowIndex, setOpenRowIndex, ro
             return errors
         },
         onSubmit: () => {
-            edit(formik.values, index)
+            edit(formik.values, id)
         }
     })
 
     function onBlur() {
-        // setRowData(rowData, index)
         formik.submitForm();
     }
 
-    // function onChange(object) {
-    //     //todo: get index and get value by index
-    //     const key = Object.keys(object)[0];
-    //     rowData[`${key}`] = Object.values(object)[0];
-    //     setRowData(rowData, index)
-    // }
+    function onMenuClick(e) {
+        e.stopPropagation()
+        setOpenMenu(!openMenu)
+    }
 
     return (
         <CollapsableRowContainer
-            id={index}
+            id={id}
             isRowOpen={isRowOpen}
         >
             <FormikProvider value={formik}>
                 <Form onSubmit={formik.handleSubmit}>
                     <RowHeaderContainer
                         open={isRowOpen}
-                        onClick={() => setOpenRowIndex(isRowOpen ? null : index)}
+                        onClick={() => setOpenRowId(isRowOpen ? null : id)}
                     >
-                        <ArrowDownIconContainer open={isRowOpen}>
-                            <ArrowDownIcon/>
-                        </ArrowDownIconContainer>
-                        <RowTitleContainer>
-                            <BudgetIcon/>
-                            <Field
-                                formik={formik}
-                                name={FieldsNames.name}
-                                label={name}
-                                onBlur={onBlur}
-                                onChange={formik.handleChange}
+                        <LeftSectionContainer>
+                            <ArrowDownIconContainer open={isRowOpen}>
+                                <ArrowDownIcon/>
+                            </ArrowDownIconContainer>
+                            <RowTitleContainer>
+                                <BudgetIcon/>
+                                <Field
+                                    formik={formik}
+                                    name={FieldsNames.name}
+                                    label={formik.values[formFields.name]}
+                                    value={formik.values[formFields.name]}
+                                    type={EDITABLE_LABEL_TYPE}
+                                    fieldProps={isInEditMode}
+                                    onBlur={() => onNameFieldBlur(setIsInEditMode, onBlur)}
+                                />
+                            </RowTitleContainer>
+                        </LeftSectionContainer>
+                        <RightSectionContainer onClick={onMenuClick} ref={menuRef}>
+                            <KebabMenuIcon/>
+                            <Menu
+                                menuOptions={getMenuOptions({id, setIsInEditMode, deleteRow})}
+                                anchorEl={anchorEl}
+                                open={openMenu}
+                                setOpen={setOpenMenu}
+                                positionObject={MenuPositioningObject}
                             />
-                        </RowTitleContainer>
+                        </RightSectionContainer>
                     </RowHeaderContainer>
                     <Collapse in={isRowOpen} timeout="auto">
                         <RowBodyContainer>
@@ -86,7 +117,6 @@ export default function CollapsableRow({index, openRowIndex, setOpenRowIndex, ro
                                 type={SELECT_TYPE}
                                 fieldProps={BudgetFrequencyOptions}
                                 onBlur={onBlur}
-                                onChange={formik.handleChange}
                             />
                             <Field
                                 formik={formik}
@@ -95,7 +125,6 @@ export default function CollapsableRow({index, openRowIndex, setOpenRowIndex, ro
                                 value={formik.values[formFields.baseline]}
                                 type={NUMBER_TYPE}
                                 onBlur={onBlur}
-                                onChange={formik.handleChange}
                             />
                             <Field
                                 formik={formik}
@@ -105,7 +134,6 @@ export default function CollapsableRow({index, openRowIndex, setOpenRowIndex, ro
                                 type={TOGGLE_TYPE}
                                 fieldProps={BudgetAllocationOptions}
                                 onBlur={onBlur}
-                                onChange={formik.handleChange}
                             />
                         </RowBodyContainer>
                     </Collapse>
