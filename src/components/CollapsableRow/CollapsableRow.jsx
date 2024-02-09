@@ -15,7 +15,7 @@ import { ReactComponent as ArrowDownIcon } from "../../assets/arrow-down-icon.sv
 import { ReactComponent as KebabMenuIcon } from "../../assets/kebab-icon.svg";
 import {
     MenuPositioningObject,
-} from '../BudgetRow/constants';
+} from '../BudgetCollapsableRow/constants';
 
 export default function CollapsableRow({
     id,

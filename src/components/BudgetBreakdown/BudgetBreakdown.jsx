@@ -1,6 +1,6 @@
 import moment from 'moment/moment';
 import { FieldsNames } from '../../Pages/Budget/constants';
-import { BUDGET_BREAKDOWN_SUBTITLE, BUDGET_BREAKDOWN_TITLE } from '../BudgetRow/constants';
+import { BUDGET_BREAKDOWN_SUBTITLE, BUDGET_BREAKDOWN_TITLE } from '../BudgetCollapsableRow/constants';
 import { AMOUNT_TYPE } from '../Field/constants';
 import Field from '../Field/Field';
 import {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from '../../components/Button/Button';
 import CollapsableRows from '../../components/CollapsableRows/CollapsableRows';
+import { BudgetRows } from '../../components/BudgetRows/BudgetRows';
 import {
     BudgetViewContainer,
     HeaderContainer,
@@ -19,6 +20,7 @@ import Tabs from "../../components/Tabs/Tabs";
 import { addRowToUIAndStorage, deleteRowFromUiAndStorage, initStorage } from './utils';
 
 export default function BudgetView() {
+    const [activeTab, setActiveTab] = useState(TabsLabels?.[0])
     const [rowsData, setRowsData] = useState([])
     const [openRowId, setOpenRowId] = useState(null)
 
@@ -33,7 +35,7 @@ export default function BudgetView() {
         addRowToUIAndStorage({rowsData, setRowsData, setOpenRowId});
     }
 
-    function deleteRow(id){
+    function deleteRow(id) {
         deleteRowFromUiAndStorage({id, rowsData, setRowsData})
     }
 
@@ -51,13 +53,22 @@ export default function BudgetView() {
                     <Button onClick={addRow} text={BUTTON_TEXT}/>
                 </SubTitleContainer>
             </SubHeaderContainer>
-            <Tabs tabsLabels={TabsLabels}/>
-            <CollapsableRows
-                rowsData={rowsData}
-                openRowId={openRowId}
-                setOpenRowId={setOpenRowId}
-                deleteRow={deleteRow}
+            <Tabs
+                tabsLabels={TabsLabels}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
             />
+            {activeTab === TabsLabels[0]
+                ? <CollapsableRows
+                    rowsData={rowsData}
+                    openRowId={openRowId}
+                    setOpenRowId={setOpenRowId}
+                    deleteRow={deleteRow}
+                />
+                : <BudgetRows
+                    rowsData={rowsData}
+                />
+            }
         </BudgetViewContainer>
     )
 }

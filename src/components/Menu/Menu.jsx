@@ -1,4 +1,4 @@
-import { Menu as MenuMui, MenuItem } from '@mui/material';
+import { Menu as MenuMui, MenuItem as MenuItemMui } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export default function Menu({anchorEl, menuOptions, open, setOpen, positionObject}) {
@@ -10,11 +10,26 @@ export default function Menu({anchorEl, menuOptions, open, setOpen, positionObje
             onClose={() => setOpen(false)}
             anchorOrigin={positionObject.anchorOrigin}
             transformOrigin={positionObject.transformOrigin}
+            PaperProps={{
+                style: {
+                    width: 160
+                }
+            }}
         >
             {menuOptions?.map((menuOption, index) =>
-                <MenuItem id={`menu-item-${index}`} onClick={menuOption.onClick}>
+                <MenuItemMui
+                    id={`menu-item-${index}`}
+                    onClick={menuOption.onClick}
+                    sx={{
+                        color: menuOption.color,
+                        backgroundColor: menuOption.backgroundColor,
+                        margin: '0 8px',
+                        borderRadius: '4px',
+                        height: '40px'
+                    }}
+                >
                     {menuOption.label}
-                </MenuItem>
+                </MenuItemMui>
             )}
         </MenuMui>
     )

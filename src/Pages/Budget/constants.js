@@ -1,4 +1,4 @@
-import { ANNUAL, EQUAL } from '../../components/BudgetRow/constants';
+import { ANNUAL, EQUAL } from '../../components/BudgetCollapsableRow/constants';
 export const BUDGET_HEADER = 'Build your budget plan';
 export const BUDGET_TITLE = 'Setup channels';
 export const BUDGET_SUB_TITLE = 'Setup your added channels by adding baseline budgets out of your total budget. See the forecast impact with the help of tips and insights.';

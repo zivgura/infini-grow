@@ -1,4 +1,4 @@
-import { ANNUAL, EQUAL, MONTHLY, QUARTERLY } from '../../components/BudgetRow/constants';
+import { ANNUAL, EQUAL, MONTHLY, QUARTERLY } from '../../components/BudgetCollapsableRow/constants';
 import { buildObjectToStorage, getBudgetsFromStorage, remove, save, updateUI } from '../../utils';
 import { BreakdownFieldsNames, DefaultBudgetValue, FieldsNames } from './constants';
 
