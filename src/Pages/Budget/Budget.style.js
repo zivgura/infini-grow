@@ -11,6 +11,7 @@ export const HeaderContainer = styled.section`
     font-size: 24px;
     font-weight: 500;
     line-height: 32px;
+    color: ${({theme})=> theme.colors.deepBlue};
 `;
 
 export const SubHeaderContainer = styled.section`

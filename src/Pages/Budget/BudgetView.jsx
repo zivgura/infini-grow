@@ -13,37 +13,28 @@ import {
     BUDGET_SUB_TITLE,
     BUDGET_TITLE,
     BUTTON_TEXT,
-    DefaultBudgetValue,
     TabsLabels
 } from "./constants";
 import Tabs from "../../components/Tabs/Tabs";
-import { buildObjectToStorage, getBudgetsFromStorage, remove, save, updateUI } from '../../utils';
+import { addRowToUIAndStorage, deleteRowFromUiAndStorage, initStorage } from './utils';
 
 export default function BudgetView() {
     const [rowsData, setRowsData] = useState([])
     const [openRowId, setOpenRowId] = useState(null)
 
     useEffect(() => {
-        const rowsDataFromStorage = getBudgetsFromStorage();
-        if (rowsDataFromStorage)
-            updateUI(setRowsData);
+        initStorage(setRowsData);
 
         return () => {
         };
     }, []);
 
     function addRow() {
-        const nextId = rowsData.length;
-        const objectToStorage = buildObjectToStorage(DefaultBudgetValue, nextId);
-        setRowsData([...rowsData, objectToStorage])
-        save(DefaultBudgetValue, nextId)
-        setOpenRowId(nextId)
+        addRowToUIAndStorage({rowsData, setRowsData, setOpenRowId});
     }
 
     function deleteRow(id){
-        const filteredRowsData = rowsData.filter((budget) => budget.id !== id)
-        setRowsData(filteredRowsData);
-        remove(id);
+        deleteRowFromUiAndStorage({id, rowsData, setRowsData})
     }
 
     return (

@@ -6,8 +6,8 @@ export const theme = createTheme({
         lightGray: '#99A4C2',
         grayBlue: '#707EA7',
         black: '#000000',
+        deepBlue: '#182033',
         darkBlue: '#2A3558',
-        lightBlue: '#99A4C2'
     },
     backgrounds:{
         main: '#B2BBD550'

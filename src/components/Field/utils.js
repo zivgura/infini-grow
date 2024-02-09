@@ -31,7 +31,7 @@ export const NumericFormatCustom = forwardRef(function NumericFormatCustom(
 });
 
 export function getFieldValueByType(props) {
-    const {formik, name, value, type, fieldProps, onBlur, handleChange} = props;
+    const {formik, name, value, type, fieldProps, onBlur, handleChange, disabled} = props;
     switch (type) {
         case EDITABLE_LABEL_TYPE:
             if (fieldProps)
@@ -47,6 +47,7 @@ export function getFieldValueByType(props) {
                         helperText={formik.errors[name]}
                         fullWidth
                         type={'text'}
+                        disabled={disabled}
                     />)
             break;
         case NUMBER_TYPE:
@@ -64,6 +65,7 @@ export function getFieldValueByType(props) {
                     InputProps={{
                         inputComponent: NumericFormatCustom,
                     }}
+                    disabled={disabled}
                 />
             )
         case SELECT_TYPE:
@@ -74,6 +76,7 @@ export function getFieldValueByType(props) {
                     options={fieldProps}
                     onBlur={onBlur}
                     onChange={handleChange}
+                    disabled={disabled}
                 />
             )
         case AMOUNT_TYPE:
@@ -87,6 +90,7 @@ export function getFieldValueByType(props) {
                     size='small'
                     InputProps={{startAdornment: '$'}}
                     fullWidth
+                    disabled={disabled}
                 />
             )
         case TOGGLE_TYPE:
@@ -99,6 +103,7 @@ export function getFieldValueByType(props) {
                         handleChange(e)
                         onBlur()
                     }}
+                    disabled={disabled}
                 />
             )
         case TEXT_TYPE:
@@ -114,6 +119,7 @@ export function getFieldValueByType(props) {
                     helperText={formik.errors[name]}
                     fullWidth
                     type={'text'}
+                    disabled={disabled}
                 />
             )
         default:

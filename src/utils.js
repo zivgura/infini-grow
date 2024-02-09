@@ -1,3 +1,5 @@
+import { now } from 'moment';
+
 const BUDGETS = 'budgets'
 
 export function initStorage(object) {
@@ -7,10 +9,9 @@ export function initStorage(object) {
 export function buildObjectToStorage(object, index){
     return {
         id: index,
-        value: object
+        value: object,
+        date: new Date(now())
     }
-    // keyValue[`${index}`] = object;
-    // return keyValue;
 }
 
 export function save(object, index) {

@@ -6,9 +6,12 @@ import { FieldContainer, FieldLabel, FieldValue } from './Field.style';
 import { getFieldLabelByType, getFieldValueByType } from './utils';
 
 export default function Field(props) {
-    const {formik, name} = props;
+    const {formik, name, width, onChange} = props;
     function handleChange({target}) {
         formik.setFieldValue(name, target.value)
+        if (onChange) {
+            onChange({target})
+        }
     }
 
     const innerProps = {...props, handleChange: handleChange}
@@ -16,7 +19,7 @@ export default function Field(props) {
     const value = getFieldValueByType(innerProps)
 
     return (
-        <FieldContainer>
+        <FieldContainer width={width}>
             {label &&
                 <FieldLabel>
                     {label}

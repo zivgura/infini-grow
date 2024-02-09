@@ -1,16 +1,18 @@
+import moment from 'moment/moment';
 import PropTypes from 'prop-types';
-import CollapsableRow from '../CollapsableRow/CollapsableRow';
+import BudgetRow from '../BudgetRow/BudgetRow';
 import { FieldTypes } from '../Field/constants';
 
 export default function CollapsableRows({rowsData, openRowId, setOpenRowId, deleteRow}) {
     return (
-        rowsData?.map(({id, value}) => (
-            <CollapsableRow
+        rowsData?.map(({id, value, date}) => (
+            <BudgetRow
                 id={id}
                 openRowId={openRowId}
                 setOpenRowId={setOpenRowId}
                 rowData={value}
                 deleteRow={deleteRow}
+                yearOfCreation={moment(date).year()}
             />
         ))
     )
