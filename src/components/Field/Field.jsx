@@ -41,5 +41,8 @@ Field.PropType = {
     value: PropTypes.any,
     type: PropTypes.oneOf(FieldTypes),
     fieldProps: PropTypes.any,
-    onBlur: PropTypes.func
+    onBlur: PropTypes.func,
+    onChange: PropTypes.func,
+    width: PropTypes.string,
+    color: PropTypes.string,
 }

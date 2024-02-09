@@ -9,7 +9,7 @@ import {
     RowBudgetBreakdownContainer
 } from './BudgetBreakdown.style';
 
-export default function BudgetBreakdown({formik, yearOfCreation}) {
+export default function BudgetBreakdown({formik, onBlur, yearOfCreation, fieldsFontColor, disabled}) {
     return (
         <RowBudgetBreakdownContainer>
             <BudgetBreakdownHeaderContainer>
@@ -32,8 +32,10 @@ export default function BudgetBreakdown({formik, yearOfCreation}) {
                             label={`${month} ${lastTwoDigitsOfAYear}`}
                             type={AMOUNT_TYPE}
                             value={formik.values[FieldsNames[fieldName]]}
-                            disabled={true}
+                            disabled={disabled}
                             width={"160px"}
+                            color={fieldsFontColor}
+                            onBlur={onBlur}
                         />
                     )
                 })}

@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { FieldsNames as formFields, FieldsNames } from '../../Pages/Budget/constants';
-import { getMonthlyAmountByFrequency, onBudgetFrequencyChange } from '../../Pages/Budget/utils';
+import { getMonthlyAmountByFrequency, onBudgetControllersChange } from '../../Pages/Budget/utils';
 import { edit } from '../../utils';
 import BudgetBreakdown from '../BudgetBreakdown/BudgetBreakdown';
 import CollapsableRow from '../CollapsableRow/CollapsableRow';
@@ -17,14 +17,19 @@ import {
     BUDGET_FREQUENCY,
     BUDGET_ALLOCATION,
     BudgetFrequencyOptions,
-    BudgetAllocationOptions,
+    BudgetAllocationOptions, EQUAL,
 } from './constants';
-import { getBaselineTitle } from './utils';
+import { getBaselineFontColor, getBaselineTitle, getBreakdownFieldFontColor } from './utils';
+import { theme } from '../../theme';
 
 export default function BudgetRow({id, openRowId, setOpenRowId, rowData, deleteRow, yearOfCreation}) {
     const isRowOpen = openRowId === id;
-    const {name, budgetFrequency, baseline, budgetAllocation} = rowData;
-    const budgetBreakdownValue = getMonthlyAmountByFrequency(budgetFrequency, baseline)
+    const {
+        name,
+        budgetFrequency,
+        baseline,
+        budgetAllocation
+    } = rowData;
     const [isInEditMode, setIsInEditMode] = useState(false);
 
     const initialValues = {
@@ -32,18 +37,18 @@ export default function BudgetRow({id, openRowId, setOpenRowId, rowData, deleteR
         [formFields.budgetFrequency]: budgetFrequency,
         [formFields.baseline]: baseline,
         [formFields.budgetAllocation]: budgetAllocation,
-        [formFields.budgetBreakdown1]: budgetBreakdownValue,
-        [formFields.budgetBreakdown2]: budgetBreakdownValue,
-        [formFields.budgetBreakdown3]: budgetBreakdownValue,
-        [formFields.budgetBreakdown4]: budgetBreakdownValue,
-        [formFields.budgetBreakdown5]: budgetBreakdownValue,
-        [formFields.budgetBreakdown6]: budgetBreakdownValue,
-        [formFields.budgetBreakdown7]: budgetBreakdownValue,
-        [formFields.budgetBreakdown8]: budgetBreakdownValue,
-        [formFields.budgetBreakdown9]: budgetBreakdownValue,
-        [formFields.budgetBreakdown10]: budgetBreakdownValue,
-        [formFields.budgetBreakdown11]: budgetBreakdownValue,
-        [formFields.budgetBreakdown12]: budgetBreakdownValue,
+        [formFields.budgetBreakdown1]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown2]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown3]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown4]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown5]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown6]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown7]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown8]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown9]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown10]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown11]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
+        [formFields.budgetBreakdown12]: getMonthlyAmountByFrequency(budgetFrequency, baseline, budgetAllocation, 0),
     }
 
     const formik = useFormik({
@@ -75,9 +80,12 @@ export default function BudgetRow({id, openRowId, setOpenRowId, rowData, deleteR
                 type={EDITABLE_LABEL_TYPE}
                 fieldProps={isInEditMode}
                 onBlur={() => onNameFieldBlur(setIsInEditMode, onBlur)}
+                color={theme.colors.blue}
             />
         </>
     )
+
+    const isEqual = formik.values[formFields.budgetAllocation] === EQUAL;
 
     const rowBody = (
         <>
@@ -90,7 +98,8 @@ export default function BudgetRow({id, openRowId, setOpenRowId, rowData, deleteR
                     type={SELECT_TYPE}
                     fieldProps={BudgetFrequencyOptions}
                     onBlur={onBlur}
-                    onChange={(e) => onBudgetFrequencyChange(e, formik)}
+                    onChange={(e) => onBudgetControllersChange(e, formik)}
+                    color={theme.colors.darkBlue}
                 />
                 <Field
                     formik={formik}
@@ -99,6 +108,8 @@ export default function BudgetRow({id, openRowId, setOpenRowId, rowData, deleteR
                     value={formik.values[formFields.baseline]}
                     type={NUMBER_TYPE}
                     onBlur={onBlur}
+                    color={getBaselineFontColor(isEqual)}
+                    onChange={(e) => onBudgetControllersChange(e, formik)}
                 />
                 <Field
                     formik={formik}
@@ -108,11 +119,16 @@ export default function BudgetRow({id, openRowId, setOpenRowId, rowData, deleteR
                     type={TOGGLE_TYPE}
                     fieldProps={BudgetAllocationOptions}
                     onBlur={onBlur}
+                    onChange={(e) => onBudgetControllersChange(e, formik)}
+                    color={theme.colors.darkBlue}
                 />
             </RowBodyFieldsContainer>
             <BudgetBreakdown
                 formik={formik}
+                onBlur={onBlur}
                 yearOfCreation={yearOfCreation}
+                fieldsFontColor={getBreakdownFieldFontColor(isEqual)}
+                disabled={isEqual}
             />
         </>
     )

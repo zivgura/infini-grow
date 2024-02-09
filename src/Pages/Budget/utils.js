@@ -1,4 +1,4 @@
-import { ANNUAL, MONTHLY, QUARTERLY } from '../../components/BudgetRow/constants';
+import { ANNUAL, EQUAL, MONTHLY, QUARTERLY } from '../../components/BudgetRow/constants';
 import { buildObjectToStorage, getBudgetsFromStorage, remove, save, updateUI } from '../../utils';
 import { BreakdownFieldsNames, DefaultBudgetValue, FieldsNames } from './constants';
 
@@ -22,24 +22,32 @@ export function initStorage(setRowsData) {
         updateUI(setRowsData);
 }
 
-export function getMonthlyAmountByFrequency(frequency, budget){
+export function getMonthlyAmountByFrequency(frequency, budget, budgetAllocation, fieldCurrentValue){
+    const isEqual = budgetAllocation === EQUAL;
+    let value = 0;
     switch (frequency){
         case ANNUAL:
-            return budget/12;
+            value= budget/12;
+            break;
         case MONTHLY:
-            return budget
+            value= budget
+            break;
         case QUARTERLY:
-            return budget/4;
+            value = budget/4;
+            break;
         default:
           return null;
     }
+    return isEqual ? value : fieldCurrentValue;
 }
 
-export function onBudgetFrequencyChange(e, formik){
-    const frequency = e.target.value;
-    const budget = formik.values[FieldsNames.baseline];
-    const value = getMonthlyAmountByFrequency(frequency, budget)
+export function onBudgetControllersChange(e, formik){
+    const frequency = e.target.name === FieldsNames.budgetFrequency ? e.target.value : formik.values[FieldsNames.budgetFrequency];
+    const baseline = e.target.name === FieldsNames.baseline ? e.target.value : formik.values[FieldsNames.baseline];
+    const budgetAllocation = e.target.name === FieldsNames.budgetAllocation ? e.target.value : formik.values[FieldsNames.budgetAllocation];
     for(const fieldName in BreakdownFieldsNames){
+        const fieldCurrentValue = formik.values[fieldName];
+        const value = getMonthlyAmountByFrequency(frequency, baseline, budgetAllocation, fieldCurrentValue);
         formik.setFieldValue(fieldName, value)
     }
 }
