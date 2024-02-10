@@ -9,16 +9,27 @@ export const RowHeaderContainer = styled.section`
     display: flex;
     align-items: center;
     width: 300px;
-    height: ${({height}) => height ? height : '48px'};
+    padding-left: 28px;
+    height: 64px;
     background: ${({theme}) => theme.gradients.secondary};
     border-right: ${({theme}) => `1px solid ${theme.borders.main}`};
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 16px;
-    color:${({theme})=>theme.colors.lightGray};
-    padding-left: 28px;
+    font-size: ${({style}) => style.fontSize};
+    font-weight: ${({style}) => style.fontWeight};
+    line-height: ${({style}) => style.lineHeight};
+    color: ${({style}) => style.color};
 `;
 
 export const RowBodyContainer = styled.section`
-    
+    display: grid;
+    grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+    padding: 0 24px;
+`;
+
+export const RowDataValueContainer = styled.section`
+    display: flex;
+    align-items: center;
+    font-size: ${({style}) => style.fontSize};
+    font-weight: ${({style}) => style.fontWeight};
+    line-height: ${({style}) => style.lineHeight};
+    color: ${({style}) => style.color};
 `;

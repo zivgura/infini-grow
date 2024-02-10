@@ -1,5 +1,5 @@
 import { ToggleButton as Toggle, ToggleButtonGroup } from '@mui/material';
-import { FieldsNames } from '../../Pages/Budget/constants';
+import { FormFieldsNames } from '../../Pages/Budget/constants';
 import { getInputStyle, theme } from '../../theme';
 
 export default function ToggleButton({value, options, onChange}) {
@@ -13,7 +13,7 @@ export default function ToggleButton({value, options, onChange}) {
         >
             {options?.map(option =>
                 <Toggle
-                    name={FieldsNames.budgetAllocation}
+                    name={FormFieldsNames.budgetAllocation}
                     value={option}
                     aria-label={option}
                     sx={{

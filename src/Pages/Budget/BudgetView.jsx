@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { BudgetRowsPerYear } from '../../components/BudgetRowsPerYear/BudgetRowsPerYear';
 import Button from '../../components/Button/Button';
 import CollapsableRows from '../../components/CollapsableRows/CollapsableRows';
-import { BudgetRows } from '../../components/BudgetRows/BudgetRows';
 import {
     BudgetViewContainer,
     HeaderContainer,
@@ -36,7 +36,7 @@ export default function BudgetView() {
     }
 
     function deleteRow(id) {
-        deleteRowFromUiAndStorage({id, rowsData, setRowsData})
+        deleteRowFromUiAndStorage({id, setRowsData})
     }
 
     return (
@@ -61,11 +61,12 @@ export default function BudgetView() {
             {activeTab === TabsLabels[0]
                 ? <CollapsableRows
                     rowsData={rowsData}
+                    setRowsData={setRowsData}
                     openRowId={openRowId}
                     setOpenRowId={setOpenRowId}
                     deleteRow={deleteRow}
                 />
-                : <BudgetRows
+                : <BudgetRowsPerYear
                     rowsData={rowsData}
                 />
             }

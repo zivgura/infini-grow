@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import BudgetCollapsableRow from '../BudgetCollapsableRow/BudgetCollapsableRow';
 import { FieldTypes } from '../Field/constants';
 
-export default function CollapsableRows({rowsData, openRowId, setOpenRowId, deleteRow}) {
+export default function CollapsableRows({rowsData, setRowsData, openRowId, setOpenRowId, deleteRow}) {
     return (
-        rowsData?.map(({id, value, date}) => (
+        rowsData?.map(({id, value, date}, index) => (
             <BudgetCollapsableRow
                 id={id}
+                rowDataIndex={index}
                 openRowId={openRowId}
                 setOpenRowId={setOpenRowId}
                 rowData={value}
+                setRowsData={setRowsData}
                 deleteRow={deleteRow}
                 yearOfCreation={moment(date).year()}
             />

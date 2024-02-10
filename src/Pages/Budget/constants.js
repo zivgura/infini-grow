@@ -24,7 +24,7 @@ export const BreakdownFieldsNames = {
     budgetBreakdown12: 'budgetBreakdown12',
 }
 
-export const FieldsNames = {
+export const FormFieldsNames = {
     ...BreakdownFieldsNames,
     name: 'name',
     budgetFrequency: 'budgetFrequency',

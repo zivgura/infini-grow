@@ -2,10 +2,11 @@ import { MenuItem, Select as SelectMui } from '@mui/material';
 import PropTypes from 'prop-types';
 import { getInputStyle } from '../../theme';
 
-export default function Select({value, options, onBlur, onChange, color}) {
+export default function Select({name, value, options, onBlur, onChange, color}) {
     const fontStyle = getInputStyle(color)
     return (
         <SelectMui
+            name={name}
             value={value}
             onChange={onChange}
             onBlur={onBlur}
