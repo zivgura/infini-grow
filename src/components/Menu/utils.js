@@ -7,7 +7,7 @@ export const getMenuOptions = ({id, setIsInEditMode, deleteRow}) => [
         },
         label: 'Edit',
         color: theme.colors.blue,
-        backgroundColor: theme.colors.white
+        backgroundColor: theme.colors.lightGray
     },
     {
         onClick: () => {

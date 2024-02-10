@@ -23,10 +23,12 @@ export default function Menu({anchorEl, menuOptions, open, setOpen, positionObje
                     onClick={menuOption.onClick}
                     sx={{
                         color: menuOption.color,
-                        backgroundColor: menuOption.backgroundColor,
                         margin: '0 8px',
                         borderRadius: '4px',
-                        height: '40px'
+                        height: '40px',
+                        ':hover':{
+                           backgroundColor: menuOption.backgroundColor
+                        }
                     }}
                 >
                     {menuOption.label}
