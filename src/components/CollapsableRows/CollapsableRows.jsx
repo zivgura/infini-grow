@@ -1,12 +1,13 @@
 import moment from 'moment/moment';
 import PropTypes from 'prop-types';
+import { RowDataProps } from '../../Pages/Budget/constants';
 import BudgetCollapsableRow from '../BudgetCollapsableRow/BudgetCollapsableRow';
-import { FieldTypes } from '../Field/constants';
 
 export default function CollapsableRows({rowsData, setRowsData, openRowId, setOpenRowId, deleteRow}) {
     return (
         rowsData?.map(({id, value, date}, index) => (
             <BudgetCollapsableRow
+                key={index}
                 id={id}
                 rowDataIndex={index}
                 openRowId={openRowId}
@@ -20,14 +21,10 @@ export default function CollapsableRows({rowsData, setRowsData, openRowId, setOp
     )
 }
 
-CollapsableRows.PropType = {
-    openRowId: PropTypes.string.isRequired,
-    setOpenRowId: PropTypes.func.isRequired,
-    rowData: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        baseline: PropTypes.shape({value: PropTypes.number, type: PropTypes.oneOf(FieldTypes)}).isRequired,
-        budgetFrequency: PropTypes.shape({value: PropTypes.number, type: PropTypes.oneOf(FieldTypes)}).isRequired,
-        budgetAllocation: PropTypes.shape({value: PropTypes.number, type: PropTypes.oneOf(FieldTypes)}).isRequired
-    })).isRequired,
+CollapsableRows.propTypes = {
+    openRowId: PropTypes.number,
+    setOpenRowId: PropTypes.func,
+    rowsData: PropTypes.arrayOf(RowDataProps.isRequired),
+    setRowsData: PropTypes.func,
     deleteRow: PropTypes.func.isRequired
 }

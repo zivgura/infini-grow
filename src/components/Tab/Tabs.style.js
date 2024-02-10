@@ -12,7 +12,7 @@ export const LabelContainer = styled.div`
     font-size: 20px;
     font-weight: 600;
     line-height: 16px;
-    color: ${({isActiveTab, theme}) => (isActiveTab ? theme.colors.black : theme.colors.gray)};
+    color: ${({$active, theme}) => $active ? theme.colors.black : theme.colors.gray};
 `;
 export const UnderlineHighlightContainer = styled.div`
     width: 100%;

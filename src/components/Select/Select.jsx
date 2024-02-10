@@ -13,8 +13,9 @@ export default function Select({name, value, options, onBlur, onChange, color}) 
             fullWidth
             sx={fontStyle}
         >
-            {options?.map(({value, label}) =>
+            {options?.map(({value, label}, index) =>
                 <MenuItem
+                    key={index}
                     value={value}
                     sx={fontStyle}
                 >
@@ -25,12 +26,12 @@ export default function Select({name, value, options, onBlur, onChange, color}) 
     )
 }
 
-Select.PropType = {
+Select.propTypes = {
     value: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.any,
         label: PropTypes.string
     })).isRequired,
-    onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
 }

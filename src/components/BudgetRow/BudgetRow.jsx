@@ -1,4 +1,5 @@
-import { BreakdownFieldsNames } from '../../Pages/Budget/constants';
+import PropTypes from 'prop-types';
+import { BreakdownFieldsNames, RowDataProps } from '../../Pages/Budget/constants';
 import { Row } from '../Row/Row';
 import { ReactComponent as BudgetIcon } from "../../assets/budget-icon.svg";
 import { RowTitleContainer } from './BudgetRow.style';
@@ -10,7 +11,7 @@ export function BudgetRow({rowData, startAdornment}) {
     function getValues(rowDataValue) {
         let values = []
         for (const fieldName in BreakdownFieldsNames) {
-            values.push(rowDataValue[fieldName]);
+            values.push(rowDataValue[fieldName].toLocaleString());
         }
         return values
     }
@@ -28,4 +29,9 @@ export function BudgetRow({rowData, startAdornment}) {
             startAdornment={startAdornment}
         />
     )
+}
+
+BudgetRow.propTypes = {
+    rowData: RowDataProps,
+    startAdornment: PropTypes.string
 }

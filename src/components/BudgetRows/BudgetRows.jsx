@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+import { RowDataProps } from '../../Pages/Budget/constants';
 import { getShortMonthsWithShortYear } from '../../Pages/Budget/utils';
 import { BudgetRow } from '../BudgetRow/BudgetRow';
 import { CHANNEL } from '../BudgetRow/constants';
@@ -13,12 +15,17 @@ export function BudgetRows({rowsData, yearOfCreation}) {
                 title={CHANNEL}
                 values={months}
             />
-            {rowsData.map((rowData) => (
+            {rowsData?.map((rowData, index) => (
                 <BudgetRow
+                    key={index}
                     rowData={rowData}
                     startAdornment={'$'}
                 />
             ))}
         </BudgetRowsContainer>
     )
+}
+BudgetRows.propTypes = {
+    rowsData: PropTypes.arrayOf(RowDataProps.isRequired),
+    yearOfCreation: PropTypes.number
 }

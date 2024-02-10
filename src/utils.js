@@ -7,7 +7,7 @@ export function initStorage(object) {
 }
 
 export function buildObjectToStorage(object, index){
-    const date = object?.date ?? new Date(now())
+    const date = object?.date ?? (new Date(now())).toISOString()
     return {
         id: index,
         value: object,

@@ -8,8 +8,8 @@ export default function Menu({anchorEl, menuOptions, open, setOpen, positionObje
             anchorEl={anchorEl}
             open={open}
             onClose={() => setOpen(false)}
-            anchorOrigin={positionObject.anchorOrigin}
-            transformOrigin={positionObject.transformOrigin}
+            anchorOrigin={positionObject?.anchorOrigin}
+            transformOrigin={positionObject?.transformOrigin}
             PaperProps={{
                 style: {
                     width: 160
@@ -18,6 +18,7 @@ export default function Menu({anchorEl, menuOptions, open, setOpen, positionObje
         >
             {menuOptions?.map((menuOption, index) =>
                 <MenuItemMui
+                    key={index}
                     id={`menu-item-${index}`}
                     onClick={menuOption.onClick}
                     sx={{
@@ -34,12 +35,24 @@ export default function Menu({anchorEl, menuOptions, open, setOpen, positionObje
         </MenuMui>
     )
 }
-Menu.PropType = {
-    anchorEl: PropTypes.node.isRequired,
+Menu.propTypes = {
+    anchorEl: PropTypes.instanceOf(Element),
     menuOptions: PropTypes.arrayOf(PropTypes.shape({
         onClick: PropTypes.func,
         label: PropTypes.node
     })).isRequired,
     open: PropTypes.bool.isRequired,
-    setOpen: PropTypes.func.isRequired
+    setOpen: PropTypes.func.isRequired,
+    positionObject: PropTypes.shape(
+        {
+            anchorOrigin: PropTypes.shape({
+                vertical: PropTypes.string,
+                horizontal: PropTypes.string,
+            }),
+            transformOrigin: PropTypes.shape({
+                vertical: PropTypes.string,
+                horizontal: PropTypes.string,
+            })
+        }
+    )
 }

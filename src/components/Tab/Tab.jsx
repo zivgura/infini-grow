@@ -5,7 +5,7 @@ export default function Tab({activeTab, label, onClick}){
     const isActiveTab = activeTab === label;
     return (
         <TabContainer onClick={onClick}>
-            <LabelContainer isActiveTab={isActiveTab}>
+            <LabelContainer $active={isActiveTab ? 'active' : null}>
                 {label}
             </LabelContainer>
             {isActiveTab && <UnderlineHighlightContainer/>}

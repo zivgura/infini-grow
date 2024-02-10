@@ -1,14 +1,20 @@
 import PropTypes from 'prop-types';
+import { Tooltip } from '@mui/material';
 import {
     FieldTypes
 } from './constants';
 import { FieldContainer, FieldLabel, FieldValue } from './Field.style';
-import { getFieldLabelByType, getFieldValueByType } from './utils';
+import { getFieldLabelByType, getFieldValueByType, getNumericValue } from './utils';
+import { ReactComponent as InfoIcon } from "../../assets/info-icon.svg";
+
 
 export default function Field(props) {
-    const {formik, name, width, onChange} = props;
+    const {formik, name, width, onChange, tooltip} = props;
+
     function handleChange({target}) {
-        formik.setFieldValue(name, target.value)
+        let value = target?.value
+        value = getNumericValue(value)
+        formik.setFieldValue(name, value)
         if (onChange) {
             onChange({target})
         }
@@ -23,6 +29,15 @@ export default function Field(props) {
             {label &&
                 <FieldLabel>
                     {label}
+                    {tooltip &&
+                        <Tooltip
+                            title={tooltip}
+                            placement={'top'}
+                            arrow
+                        >
+                            <InfoIcon/>
+                        </Tooltip>
+                    }
                 </FieldLabel>
             }
             {value &&
@@ -34,7 +49,7 @@ export default function Field(props) {
     )
 }
 
-Field.PropType = {
+Field.propTypes = {
     formik: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
@@ -45,4 +60,6 @@ Field.PropType = {
     onChange: PropTypes.func,
     width: PropTypes.string,
     color: PropTypes.string,
+    tooltip: PropTypes.string,
+    disabled: PropTypes.bool
 }

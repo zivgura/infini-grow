@@ -22,7 +22,7 @@ import { addRowToUIAndStorage, deleteRowFromUiAndStorage, initStorage } from './
 export default function BudgetView() {
     const [activeTab, setActiveTab] = useState(TabsLabels?.[0])
     const [rowsData, setRowsData] = useState([])
-    const [openRowId, setOpenRowId] = useState(null)
+    const [openRowId, setOpenRowId] = useState(-1)
 
     useEffect(() => {
         initStorage(setRowsData);

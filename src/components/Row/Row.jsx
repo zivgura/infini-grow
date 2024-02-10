@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import { ROW_TYPES } from './constants';
-import { RowBodyContainer, RowContainer, RowDataValueContainer, RowHeaderContainer } from './Row.style';
+import { RowBodyContainer, RowContainer, RowDataValueContainer, RowTitleContainer } from './Row.style';
 import { getRowStyleByType } from './utils';
 
 export function Row({values, title, type, startAdornment}) {
     const rowStyle = getRowStyleByType(type);
     return (
         <RowContainer>
-            <RowHeaderContainer style={rowStyle}>
+            <RowTitleContainer style={rowStyle.TITLE}>
                 {title}
-            </RowHeaderContainer>
+            </RowTitleContainer>
             <RowBodyContainer>
-                {values.map((value) => (
+                {values?.map((value, index) => (
                     <RowDataValueContainer
-                        style={rowStyle}
+                        key={index}
+                        style={rowStyle.FIELD}
                     >
                         {startAdornment ?
                             `${startAdornment}${value}`
@@ -26,8 +27,8 @@ export function Row({values, title, type, startAdornment}) {
     )
 }
 
-Row.PropType = {
-    values: PropTypes.arrayOf(PropTypes.string),
-    title: PropTypes.string,
+Row.propTypes = {
+    values: PropTypes.array,
+    title: PropTypes.node,
     type: PropTypes.oneOf(ROW_TYPES)
 }

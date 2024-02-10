@@ -11,8 +11,9 @@ export default function ToggleButton({value, options, onChange}) {
             onChange={onChange}
             // color="primary"
         >
-            {options?.map(option =>
+            {options?.map((option, index) =>
                 <Toggle
+                    key={index}
                     name={FormFieldsNames.budgetAllocation}
                     value={option}
                     aria-label={option}

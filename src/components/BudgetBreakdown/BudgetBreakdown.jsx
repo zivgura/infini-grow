@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { FormFieldsNames } from '../../Pages/Budget/constants';
 import { getShortMonthsWithShortYear } from '../../Pages/Budget/utils';
 import { BUDGET_BREAKDOWN_SUBTITLE, BUDGET_BREAKDOWN_TITLE } from '../BudgetCollapsableRow/constants';
@@ -26,6 +27,7 @@ export default function BudgetBreakdown({formik, onBlur, yearOfCreation, fieldsF
                     const fieldName = `budgetBreakdown${index+1}`;
                     return (
                         <Field
+                            key={index}
                             formik={formik}
                             name={FormFieldsNames[fieldName]}
                             label={monthWithYear}
@@ -37,8 +39,15 @@ export default function BudgetBreakdown({formik, onBlur, yearOfCreation, fieldsF
                             onBlur={onBlur}
                         />
                     )
-                })}
+                }) ?? []}
             </BudgetBreakdownSectionContainer>
         </RowBudgetBreakdownContainer>
     )
+}
+BudgetBreakdown.propTypes = {
+    formik: PropTypes.object.isRequired,
+    yearOfCreation: PropTypes.number.isRequired,
+    onBlur: PropTypes.func,
+    fieldsFontColor: PropTypes.any,
+    disabled: PropTypes.bool
 }

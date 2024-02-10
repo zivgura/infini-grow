@@ -1,4 +1,5 @@
 import { Form, FormikProvider } from 'formik';
+import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import Menu from '../Menu/Menu';
 import {
@@ -45,7 +46,6 @@ export default function CollapsableRow({
     return (
         <CollapsableRowContainer
             id={id}
-            isRowOpen={isRowOpen}
         >
             <FormikProvider value={formik}>
                 <Form onSubmit={formik.handleSubmit}>
@@ -81,4 +81,18 @@ export default function CollapsableRow({
             </FormikProvider>
         </CollapsableRowContainer>
     )
+}
+CollapsableRow.propTypes={
+    id: PropTypes.number,
+    formik: PropTypes.object,
+    isRowOpen: PropTypes.bool,
+    setOpenRowId: PropTypes.func,
+    rowHeader: PropTypes.node,
+    menuOptions: PropTypes.arrayOf(PropTypes.shape({
+        onClick: PropTypes.func,
+        label: PropTypes.string,
+        color: PropTypes.string,
+        backgroundColor: PropTypes.string
+    })),
+    rowBody: PropTypes.node
 }

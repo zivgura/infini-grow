@@ -55,7 +55,9 @@ export function getFieldValueByType(props) {
                         sx={{
                             input: inputStyle
                         }}
-                        onClick={(e)=>{e.stopPropagation()}}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                        }}
                     />)
             break;
         case NUMBER_TYPE:
@@ -172,7 +174,22 @@ export function getFieldLabelByType({type, label, fieldProps}) {
     }
 }
 
-export default function onNameFieldBlur(setIsInEditMode, onBlur) {
+export function onNameFieldBlur(setIsInEditMode, onBlur) {
     setIsInEditMode(false);
     onBlur();
+}
+
+export function getNumericValue(value) {
+    let numericValue;
+    try {
+        numericValue = parseFloat(value)
+        if(!isNaN(numericValue)) {
+            return numericValue
+        }
+        else {
+            return value
+        }
+    } catch (e) {
+        return value
+    }
 }
